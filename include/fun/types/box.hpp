@@ -5,6 +5,7 @@
  ******************************************************************************/
 
 #pragma once
+#include "_types.h"
 
 #include <memory>
 #include <stdexcept>
