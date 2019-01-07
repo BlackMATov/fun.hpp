@@ -24,6 +24,12 @@ namespace fun
     template < typename T >
     class box_t final {
     public:
+        using value_type = T;
+        using pointer = value_type*;
+        using const_pointer = const value_type*;
+        using reference = value_type&;
+        using const_reference = const value_type&;
+    public:
         box_t();
         ~box_t() noexcept = default;
 
@@ -60,6 +66,15 @@ namespace fun
     auto make_box_inplace(Us&&... vs) {
         return box_t<T>(box_inplace_ctor_t{}, std::forward<Us>(vs)...);
     }
+
+    struct make_box_f {
+        template < typename A >
+        auto operator()(A&& v) const {
+            return make_box(std::forward<A>(v));
+        }
+    };
+    inline const auto fbox = curry(make_box_f());
+
 }
 
 namespace fun

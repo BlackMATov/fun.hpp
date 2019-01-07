@@ -34,21 +34,15 @@ namespace fun
 
     namespace monoid_f
     {
+        //
+        // empty
+        //
+
         template < typename A >
         A empty() {
             monoid_t::check_instance<A>();
             return monoid_t::instance_type<A>::empty();
         }
-
-        template < typename A >
-        A append(const A& lhs, const A& rhs) {
-            monoid_t::check_instance<A>();
-            return monoid_t::instance_type<A>::append(lhs, rhs);
-        }
-
-        //
-        //
-        //
 
         template < typename A >
         struct empty_f {
@@ -59,6 +53,16 @@ namespace fun
         template < typename A >
         inline const auto fempty = empty_f<A>()();
 
+        //
+        // append
+        //
+
+        template < typename A >
+        A append(const A& lhs, const A& rhs) {
+            monoid_t::check_instance<A>();
+            return monoid_t::instance_type<A>::append(lhs, rhs);
+        }
+
         struct append_f {
             template < typename A >
             A operator()(const A& lhs, const A& rhs) const {
@@ -66,5 +70,21 @@ namespace fun
             }
         };
         inline const auto fappend = curry(append_f());
+    }
+
+    //
+    // monoid_f operators
+    //
+
+    namespace monoid_ops
+    {
+        template
+        <
+            typename A,
+            typename = std::enable_if_t<monoid_t::instance<A>>
+        >
+        auto operator>>=(const A& lhs, const A& rhs) {
+            return monoid_f::append(lhs, rhs);
+        }
     }
 }

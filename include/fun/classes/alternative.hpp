@@ -97,13 +97,16 @@ namespace fun
     // alternative operators
     //
 
-    template
-    <
-        template <typename...> class T,
-        typename... As,
-        typename = std::enable_if<alternative_t::instance<T>>
-    >
-    auto operator||(const T<As...>& lhs, const T<As...>& rhs) {
-        return alternative_f::alter(lhs, rhs);
+    namespace alternative_ops
+    {
+        template
+        <
+            template <typename...> class T,
+            typename... As,
+            typename = std::enable_if<alternative_t::instance<T>>
+        >
+        auto operator||(const T<As...>& lhs, const T<As...>& rhs) {
+            return alternative_f::alter(lhs, rhs);
+        }
     }
 }

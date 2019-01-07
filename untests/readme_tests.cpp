@@ -16,13 +16,17 @@
 #include "fun/types/box.hpp"
 #include "fun/types/maybe.hpp"
 
+#include <fun/classes/eq.hpp>
 #include <fun/classes/num.hpp>
+#include <fun/classes/monad.hpp>
 #include <fun/classes/monoid.hpp>
 #include <fun/classes/functor.hpp>
 #include <fun/classes/applicative.hpp>
 #include <fun/classes/alternative.hpp>
 
+#include <fun/instances/eq.hpp>
 #include <fun/instances/num.hpp>
+#include <fun/instances/monad.hpp>
 #include <fun/instances/monoid.hpp>
 #include <fun/instances/functor.hpp>
 #include <fun/instances/applicative.hpp>
@@ -69,6 +73,7 @@ TEST_CASE("readme_type_classes") {
     SECTION("functor") {
         using namespace fun;
         using namespace fun::underscore;
+        using namespace fun::functor_ops;
 
         maybe_t<int> m = make_just(21);
         maybe_t<unsigned> m1 = functor_f::fmap(_ * 2u, m);
@@ -81,6 +86,7 @@ TEST_CASE("readme_type_classes") {
     SECTION("applicative") {
         using namespace fun;
         using namespace fun::underscore;
+        using namespace fun::applicative_ops;
 
         maybe_t<int> m = applicative_f::apply(make_just(_+20), make_just(22));
         REQUIRE(*m == 42);
@@ -91,6 +97,7 @@ TEST_CASE("readme_type_classes") {
     }
     SECTION("alternative") {
         using namespace fun;
+        using namespace fun::alternative_ops;
 
         maybe_t<int> m = alternative_f::alter(make_nothing<int>(), make_just<int>(42));
         REQUIRE(*m == 42);
@@ -101,15 +108,43 @@ TEST_CASE("readme_type_classes") {
     }
     SECTION("monoid") {
         using namespace fun;
+        using namespace fun::monoid_ops;
 
         REQUIRE(monoid_f::append(make_any(true), make_any(false)).get_any());
         REQUIRE(monoid_f::append(make_all(true), make_all(true)).get_all());
         REQUIRE_FALSE(monoid_f::append(make_all(true), make_all(false)).get_all());
 
         // and for maybe_t of monoid of course
-        REQUIRE(monoid_f::append(
-            make_nothing<sum_t<int>>(),
-            make_just(make_sum(32))
-        )->get_sum() == 32);
+        REQUIRE((
+            make_just(make_sum(32)) >>=
+            make_nothing<sum_t<int>>() >>=
+            make_just(make_sum(10))
+        )->get_sum() == 42);
+    }
+    SECTION("monad") {
+        using namespace fun;
+        using namespace fun::eq_ops;
+        using namespace fun::monad_ops;
+        using namespace fun::underscore;
+        {
+            REQUIRE((monad_f::mreturn<maybe_t>(10) == make_just(10)));
+            REQUIRE((monad_f::mbind(fjust(10), fjust * (_*2)) == fjust(20)));
+            REQUIRE(((fjust(10) >>= fjust * (_*2)) == fjust(20)));
+        }
+        {
+            auto m = monad_f::mdo<maybe_t>(
+                []()               { return fjust(32); },
+                [](int x1)         { (void)x1; return fjust(10); },
+                [](int x1, int x2) { return monad_f::mreturn<maybe_t>(x1 + x2); }
+            );
+            REQUIRE((m == make_just(42)));
+
+            auto m2 = monad_f::mdo<maybe_t>(
+                fjust(32),
+                fnothing<int>,
+                []() { return monad_f::mreturn<maybe_t>(42); }
+            );
+            REQUIRE((m2 == make_nothing<int>()));
+        }
     }
 }

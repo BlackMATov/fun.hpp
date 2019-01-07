@@ -48,7 +48,7 @@ namespace fun
         static box_t<B> fmap(F f, const box_t<A>& b) {
             static_assert(
                 std::is_convertible<F, std::function<B(A)>>::value,
-                "fmap requires a function type (A -> B)");
+                "fmap requires a function type (a -> b)");
             return make_box(f(*b));
         }
     };
@@ -61,7 +61,7 @@ namespace fun
         static maybe_t<B> fmap(F f, const maybe_t<A>& m) {
             static_assert(
                 std::is_convertible<F, std::function<B(A)>>::value,
-                "fmap requires a function type (A -> B)");
+                "fmap requires a function type (a -> b)");
             return m.is_just()
                 ? make_just(f(*m))
                 : make_nothing<B>();
