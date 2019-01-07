@@ -50,6 +50,34 @@ REQUIRE(n.is_nothing());
 REQUIRE_THROWS(*n);
 ```
 
+### Any/All
+
+```cpp
+#include "fun/types/any.hpp"
+#include "fun/types/all.hpp"
+using namespace fun;
+
+any_t a = make_any(true);
+REQUIRE(a.get_any());
+
+all_t b = make_all(false);
+REQUIRE_FALSE(b.get_all());
+```
+
+### Sum/Product
+
+```cpp
+#include "fun/types/sum.hpp"
+#include "fun/types/product.hpp"
+using namespace fun;
+
+sum_t<int> a = make_sum(10);
+REQUIRE(a.get_sum() == 10);
+
+product_t<int> b = make_product(20);
+REQUIRE(b.get_product() == 20);
+```
+
 ## Type Classes
 
 ### Functor

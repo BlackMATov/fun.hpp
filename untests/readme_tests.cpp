@@ -29,6 +29,24 @@
 #include <fun/instances/alternative.hpp>
 
 TEST_CASE("readme_types") {
+    SECTION("any/all") {
+        using namespace fun;
+
+        any_t a = make_any(true);
+        REQUIRE(a.get_any());
+
+        all_t b = make_all(false);
+        REQUIRE_FALSE(b.get_all());
+    }
+    SECTION("sum/product") {
+        using namespace fun;
+
+        sum_t<int> a = make_sum(10);
+        REQUIRE(a.get_sum() == 10);
+
+        product_t<int> b = make_product(20);
+        REQUIRE(b.get_product() == 20);
+    }
     SECTION("box") {
         using namespace fun;
         box_t<int> b = make_box(42);
