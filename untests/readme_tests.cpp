@@ -7,13 +7,23 @@
 #define CATCH_CONFIG_FAST_COMPILE
 #include "catch.hpp"
 
+#include "fun/types/all.hpp"
+#include "fun/types/any.hpp"
+
+#include "fun/types/sum.hpp"
+#include "fun/types/product.hpp"
+
 #include "fun/types/box.hpp"
 #include "fun/types/maybe.hpp"
 
+#include <fun/classes/num.hpp>
+#include <fun/classes/monoid.hpp>
 #include <fun/classes/functor.hpp>
 #include <fun/classes/applicative.hpp>
 #include <fun/classes/alternative.hpp>
 
+#include <fun/instances/num.hpp>
+#include <fun/instances/monoid.hpp>
 #include <fun/instances/functor.hpp>
 #include <fun/instances/applicative.hpp>
 #include <fun/instances/alternative.hpp>
@@ -70,5 +80,18 @@ TEST_CASE("readme_type_classes") {
         maybe_t<int> n = alternative_f::empty<maybe_t, int>();
         maybe_t<int> n1 = n || make_just(42); // alter operator syntax
         REQUIRE(*n1 == 42);
+    }
+    SECTION("monoid") {
+        using namespace fun;
+
+        REQUIRE(monoid_f::append(make_any(true), make_any(false)).get_any());
+        REQUIRE(monoid_f::append(make_all(true), make_all(true)).get_all());
+        REQUIRE_FALSE(monoid_f::append(make_all(true), make_all(false)).get_all());
+
+        // and for maybe_t of monoid of course
+        REQUIRE(monoid_f::append(
+            make_nothing<sum_t<int>>(),
+            make_just(make_sum(32))
+        )->get_sum() == 32);
     }
 }

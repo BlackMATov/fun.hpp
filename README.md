@@ -102,6 +102,22 @@ maybe_t<int> n1 = n || make_just(42); // alter operator syntax
 REQUIRE(*n1 == 42);
 ```
 
+### Monoid
 
+```cpp
+#include <fun/classes/monoid.hpp>
+#include <fun/instances/monoid.hpp>
+using namespace fun;
+
+REQUIRE(monoid_f::append(make_any(true), make_any(false)).get_any());
+REQUIRE(monoid_f::append(make_all(true), make_all(true)).get_all());
+REQUIRE_FALSE(monoid_f::append(make_all(true), make_all(false)).get_all());
+
+// and for Maybe of Monoid types of course
+REQUIRE(monoid_f::append(
+    make_nothing<sum_t<int>>(),
+    make_just(make_sum(32))
+)->get_sum() == 32);
+```
 
 ## [License (MIT)](./LICENSE.md)
