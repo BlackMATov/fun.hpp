@@ -15,6 +15,10 @@ using namespace fun::underscore;
 
 TEST_CASE("functor"){
     {
+        REQUIRE(functor_f::fmap(_*2, make_sum(10)).get_sum() == 20);
+        REQUIRE(functor_f::fmap(_*2, make_product(20)).get_product() == 40);
+    }
+    {
         auto m = make_just(42);
         auto m1 = functor_f::fmap(_ * 2, m);
         auto m2 = functor_f::ffmap(_ * 2, m);

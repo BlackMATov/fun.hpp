@@ -15,6 +15,9 @@ using namespace fun::underscore;
 
 TEST_CASE("applicative"){
     SECTION("pure") {
+        REQUIRE(applicative_f::pure<sum_t>(10).get_sum() == 10);
+        REQUIRE(applicative_f::pure<product_t>(10).get_product() == 10);
+
         box_t<int> b = applicative_f::pure<box_t>(42);
         REQUIRE(*b == 42);
 
@@ -30,6 +33,9 @@ TEST_CASE("applicative"){
         REQUIRE(*m2 == 42);
     }
     SECTION("apply") {
+        REQUIRE(applicative_f::apply(make_sum(_+2), make_sum(40)).get_sum() == 42);
+        REQUIRE(applicative_f::apply(make_product(_+2), make_product(40)).get_product() == 42);
+
         box_t<int> b = applicative_f::apply(make_box(_ + 2), make_box(40));
         REQUIRE(*b == 42);
         box_t<int> b2 = applicative_f::fapply(make_box(_ + 2), make_box(40));

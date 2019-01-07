@@ -13,7 +13,9 @@
 #include "../types/box.hpp"
 #include "../types/maybe.hpp"
 
+#include "../classes/applicative.hpp"
 #include "../instances/applicative.hpp"
+
 #include "../classes/alternative.hpp"
 
 namespace fun

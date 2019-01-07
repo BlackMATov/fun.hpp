@@ -10,6 +10,9 @@
 #include <functional>
 #include <type_traits>
 
+#include "../types/sum.hpp"
+#include "../types/product.hpp"
+
 #include "../types/box.hpp"
 #include "../types/maybe.hpp"
 
@@ -17,6 +20,26 @@
 
 namespace fun
 {
+    template <>
+    struct functor_inst_t<sum_t, sum_t> : functor_inst_t<sum_t> {
+        static constexpr bool instance = true;
+
+        template < typename A, typename F, typename B = std::invoke_result_t<F,A> >
+        static sum_t<B> fmap(F f, const sum_t<A>& s) {
+            return sum_t<B>(f(s.get_sum()));
+        }
+    };
+
+    template <>
+    struct functor_inst_t<product_t, product_t> : functor_inst_t<product_t> {
+        static constexpr bool instance = true;
+
+        template < typename A, typename F, typename B = std::invoke_result_t<F,A> >
+        static product_t<B> fmap(F f, const product_t<A>& s) {
+            return product_t<B>(f(s.get_product()));
+        }
+    };
+
     template <>
     struct functor_inst_t<box_t, box_t> : functor_inst_t<box_t> {
         static constexpr bool instance = true;
