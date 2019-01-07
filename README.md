@@ -64,4 +64,21 @@ maybe_t<int> n1 = make_just(_+20) >>= n; // apply operator syntax
 REQUIRE(n1.is_nothing());
 ```
 
+### Alternative
+
+```cpp
+#include "fun/classes/alternative.hpp"
+#include "fun/instances/alternative.hpp"
+using namespace fun;
+
+maybe_t<int> m = alternative_f::alter(make_nothing<int>(), make_just<int>(42));
+REQUIRE(*m == 42);
+
+maybe_t<int> n = alternative_f::empty<maybe_t, int>();
+maybe_t<int> n1 = n || make_just(42); // alter operator syntax
+REQUIRE(*n1 == 42);
+```
+
+
+
 ## [License (MIT)](./LICENSE.md)

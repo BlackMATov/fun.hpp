@@ -12,9 +12,11 @@
 
 #include <fun/classes/functor.hpp>
 #include <fun/classes/applicative.hpp>
+#include <fun/classes/alternative.hpp>
 
 #include <fun/instances/functor.hpp>
 #include <fun/instances/applicative.hpp>
+#include <fun/instances/alternative.hpp>
 
 TEST_CASE("readme_types") {
     SECTION("box") {
@@ -58,5 +60,15 @@ TEST_CASE("readme_type_classes") {
         maybe_t<int> n = make_nothing<int>();
         maybe_t<int> n1 = make_just(_+20) >>= n; // apply operator syntax
         REQUIRE(n1.is_nothing());
+    }
+    SECTION("alternative") {
+        using namespace fun;
+
+        maybe_t<int> m = alternative_f::alter(make_nothing<int>(), make_just<int>(42));
+        REQUIRE(*m == 42);
+
+        maybe_t<int> n = alternative_f::empty<maybe_t, int>();
+        maybe_t<int> n1 = n || make_just(42); // alter operator syntax
+        REQUIRE(*n1 == 42);
     }
 }
