@@ -1,7 +1,6 @@
 version: "{build}"
 shallow_clone: true
 image:
-  - Visual Studio 2015
   - Visual Studio 2017
 platform:
   - Win32

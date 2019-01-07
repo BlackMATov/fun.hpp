@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.5 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.8 FATAL_ERROR)
 project(fun)
 
 option(FUN_BUILD_WITH_COVERAGE "Build with coverage" OFF)
@@ -10,7 +10,10 @@ if(FUN_BUILD_WITH_COVERAGE AND (CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang"))
     set(CMAKE_LINKER_FLAGS_DEBUG "${CMAKE_LINKER_FLAGS_DEBUG} ${FUN_COVERAGE_FLAGS}")
 endif()
 
-file(GLOB_RECURSE untest_sources "*.cpp" "*.hpp")
+file(GLOB_RECURSE untest_sources
+    "3rdparty/*.*"
+    "include/*.*"
+    "untests/*.*")
 add_executable(${PROJECT_NAME} ${untest_sources})
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
