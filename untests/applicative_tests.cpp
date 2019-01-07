@@ -59,6 +59,7 @@ TEST_CASE("applicative"){
         maybe_t<int> m8 = applicative_f::fapply(make_nothing<int(int)>(), make_nothing<int>());
         REQUIRE(m8.is_nothing());
 
+        using namespace applicative_ops;
         maybe_t<int> m9 = make_just(_ + 20) >>= make_just(22);
         REQUIRE(*m == 42);
     }

@@ -98,10 +98,14 @@ namespace fun
     //
 
     template < typename A >
-    struct eq_inst_t<box_t<A>, box_t<A>> : eq_inst_t<box_t<A>> {
+    struct eq_inst_t<box_t<A>,
+        std::enable_if_t<
+            eq_t::instance<A>, box_t<A>>
+        > : eq_inst_t<box_t<A>>
+    {
         static constexpr bool instance = true;
         static bool equals(const box_t<A>& l, const box_t<A>& r) {
-            return *l == *r;
+            return eq_f::equals(*l, *r);
         }
     };
 
@@ -110,12 +114,16 @@ namespace fun
     //
 
     template < typename A >
-    struct eq_inst_t<maybe_t<A>, maybe_t<A>> : eq_inst_t<maybe_t<A>> {
+    struct eq_inst_t<maybe_t<A>,
+        std::enable_if_t<
+            eq_t::instance<A>, maybe_t<A>>
+        > : eq_inst_t<maybe_t<A>>
+    {
         static constexpr bool instance = true;
         static bool equals(const maybe_t<A>& l, const maybe_t<A>& r) {
             return
                 (l.is_nothing() && r.is_nothing()) ||
-                (l.is_just() && r.is_just() && *l == *r);
+                (l.is_just() && r.is_just() && eq_f::equals(*l, *r));
         }
     };
 }

@@ -104,25 +104,28 @@ namespace fun
     // functor_f operators
     //
 
-    template
-    <
-        typename F,
-        template <typename...> class T,
-        typename... As,
-        typename = std::enable_if_t<functor_t::instance<T>>
-    >
-    auto operator>>=(F f, const T<As...>& t) {
-        return functor_f::fmap(f, t);
-    }
+    namespace functor_ops
+    {
+        template
+        <
+            typename F,
+            template <typename...> class T,
+            typename... As,
+            typename = std::enable_if_t<functor_t::instance<T>>
+        >
+        auto operator>>=(F f, const T<As...>& t) {
+            return functor_f::fmap(f, t);
+        }
 
-    template
-    <
-        typename B,
-        template <typename...> class T,
-        typename... As,
-        typename = std::enable_if_t<functor_t::instance<T>>
-    >
-    auto operator>>(const B& b, const T<As...>& t) {
-        return functor_f::fmap_const(b, t);
+        template
+        <
+            typename B,
+            template <typename...> class T,
+            typename... As,
+            typename = std::enable_if_t<functor_t::instance<T>>
+        >
+        auto operator>>(const B& b, const T<As...>& t) {
+            return functor_f::fmap_const(b, t);
+        }
     }
 }

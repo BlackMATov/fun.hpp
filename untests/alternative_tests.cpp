@@ -43,6 +43,8 @@ TEST_CASE("alternative"){
             REQUIRE(m3.is_nothing());
         }
         {
+            using namespace fun::alternative_ops;
+
             maybe_t<int> m = make_just(42) || make_just(10);
             REQUIRE(*m == 42);
             maybe_t<int> m1 = make_nothing<int>() || make_just(10);

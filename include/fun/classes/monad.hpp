@@ -47,6 +47,30 @@ namespace fun
 
     namespace monad_f
     {
+        //
+        // mbind decl
+        //
+
+        template
+        <
+            typename F,
+            template <typename...> class T,
+            typename... As
+        >
+        auto mbind(const T<As...>& t, F&& f);
+
+        //
+        // mbind_const decl
+        //
+
+        template
+        <
+            template <typename...> class T,
+            typename... As,
+            typename... Bs
+        >
+        auto mbind_const(const T<As...>& a, const T<Bs...>& b);
+
         namespace mdo_detail
         {
             //
@@ -112,7 +136,9 @@ namespace fun
                 typename... Fs
             >
             auto mdo_impl(TArgs&& args, const T<As...>& v, Fs&&... fs) {
-                return v >> mdo_impl<T>(std::forward<TArgs>(args), std::forward<Fs>(fs)...);
+                return mbind_const(
+                    v,
+                    mdo_impl<T>(std::forward<TArgs>(args), std::forward<Fs>(fs)...));
             }
 
             template
@@ -136,15 +162,16 @@ namespace fun
             >
             auto mdo_impl(std::tuple<Args...>&& args, F&& f, Fs&&... fs) {
                 auto m = std::apply(std::forward<F>(f), args);
-                return std::move(m) >>= [
-                    args = std::move(args),
-                    fs...
-                ](auto&& v){
-                    auto nargs = std::tuple_cat(
-                        std::move(args),
-                        std::make_tuple(std::forward<decltype(v)>(v)));
-                    return mdo_impl<T>(std::move(nargs), fs...);
-                };
+                return mbind(
+                    std::move(m), [
+                        args = std::move(args),
+                        fs...
+                    ](auto&& v){
+                        auto nargs = std::tuple_cat(
+                            std::move(args),
+                            std::make_tuple(std::forward<decltype(v)>(v)));
+                        return mdo_impl<T>(std::move(nargs), fs...);
+                    });
             }
         }
 
@@ -220,7 +247,7 @@ namespace fun
         >
         auto mbind_const(const T<As...>& a, const T<Bs...>& b) {
             monad_t::check_instance<T>();
-            return a >>= fconst(b);
+            return mbind(a, fconst(b));
         }
 
         struct mbind_const_f {
@@ -326,25 +353,28 @@ namespace fun
     // monad_f operators
     //
 
-    template
-    <
-        template <typename...> class T,
-        typename... As,
-        typename F,
-        typename = std::enable_if_t<monad_t::instance<T>>
-    >
-    auto operator>>=(const T<As...>& t, F&& f) {
-        return monad_f::mbind(t, std::forward<F>(f));
-    }
+    namespace monad_ops
+    {
+        template
+        <
+            template <typename...> class T,
+            typename... As,
+            typename F,
+            typename = std::enable_if_t<monad_t::instance<T>>
+        >
+        auto operator>>=(const T<As...>& t, F&& f) {
+            return monad_f::mbind(t, std::forward<F>(f));
+        }
 
-    template
-    <
-        template <typename...> class T,
-        typename... As,
-        typename... Bs,
-        typename = std::enable_if_t<monad_t::instance<T>>
-    >
-    auto operator>>(const T<As...>& a, const T<Bs...>& b) {
-        return monad_f::mbind_const(a, b);
+        template
+        <
+            template <typename...> class T,
+            typename... As,
+            typename... Bs,
+            typename = std::enable_if_t<monad_t::instance<T>>
+        >
+        auto operator>>(const T<As...>& a, const T<Bs...>& b) {
+            return monad_f::mbind_const(a, b);
+        }
     }
 }

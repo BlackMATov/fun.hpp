@@ -81,23 +81,26 @@ namespace fun
     // num operators
     //
 
-    template < typename A, typename = std::enable_if_t<num_t::instance<A>> >
-    A operator-(const A& a) {
-        return num_f::negate(a);
-    }
+    namespace num_ops
+    {
+        template < typename A, typename = std::enable_if_t<num_t::instance<A>> >
+        A operator-(const A& a) {
+            return num_f::negate(a);
+        }
 
-    template < typename A, typename = std::enable_if_t<num_t::instance<A>> >
-    A operator+(const A& l, const A& r) {
-        return num_f::plus(l, r);
-    }
+        template < typename A, typename = std::enable_if_t<num_t::instance<A>> >
+        A operator+(const A& l, const A& r) {
+            return num_f::plus(l, r);
+        }
 
-    template < typename A, typename = std::enable_if_t<num_t::instance<A>> >
-    A operator-(const A& l, const A& r) {
-        return num_f::minus(l, r);
-    }
+        template < typename A, typename = std::enable_if_t<num_t::instance<A>> >
+        A operator-(const A& l, const A& r) {
+            return num_f::minus(l, r);
+        }
 
-    template < typename A, typename = std::enable_if_t<num_t::instance<A>> >
-    A operator*(const A& l, const A& r) {
-        return num_f::multiplies(l, r);
+        template < typename A, typename = std::enable_if_t<num_t::instance<A>> >
+        A operator*(const A& l, const A& r) {
+            return num_f::multiplies(l, r);
+        }
     }
 }

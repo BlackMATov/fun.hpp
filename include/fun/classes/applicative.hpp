@@ -163,14 +163,17 @@ namespace fun
     // applicative_f operators
     //
 
-    template
-    <
-        template <typename...> class T,
-        typename... Fs,
-        typename... As,
-        typename = std::enable_if_t<applicative_t::instance<T>>
-    >
-    auto operator>>=(const T<Fs...>& f, const T<As...>& a) {
-        return applicative_f::apply(f, a);
+    namespace applicative_ops
+    {
+        template
+        <
+            template <typename...> class T,
+            typename... Fs,
+            typename... As,
+            typename = std::enable_if_t<applicative_t::instance<T>>
+        >
+        auto operator>>=(const T<Fs...>& f, const T<As...>& a) {
+            return applicative_f::apply(f, a);
+        }
     }
 }

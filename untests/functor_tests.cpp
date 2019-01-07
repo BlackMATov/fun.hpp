@@ -34,19 +34,22 @@ TEST_CASE("functor"){
         REQUIRE(*m1 == 84);
         REQUIRE(*m2 == 84);
     }
-    {
-        const auto m0 = make_just(21);
-        const auto m1 = (_ * 2) >>= m0;
-        REQUIRE(*m1 == 42);
-    }
-    {
-        auto b = make_box(42);
-        auto b1 = _ * 2 >>= b;
-        REQUIRE(*b1 == 84);
-    }
-    {
-        auto b = make_box(42);
-        auto b1 = 84 >> b;
-        REQUIRE(*b1 == 84);
+    SECTION("operators") {
+        using namespace fun::functor_ops;
+        {
+            const auto m0 = make_just(21);
+            const auto m1 = (_ * 2) >>= m0;
+            REQUIRE(*m1 == 42);
+        }
+        {
+            auto b = make_box(42);
+            auto b1 = _ * 2 >>= b;
+            REQUIRE(*b1 == 84);
+        }
+        {
+            auto b = make_box(42);
+            auto b1 = 84 >> b;
+            REQUIRE(*b1 == 84);
+        }
     }
 }

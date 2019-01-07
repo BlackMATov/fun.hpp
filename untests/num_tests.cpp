@@ -104,6 +104,8 @@ TEST_CASE("num"){
         REQUIRE(*num_f::negate(make_box(10)) == -10);
     }
     SECTION("operators") {
+        using namespace fun::num_ops;
+
         REQUIRE((-vali(2)).x == -2);
         REQUIRE((vali(2) + vali(3)).x == 5);
         REQUIRE((vali(2) - vali(3)).x == -1);

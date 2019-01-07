@@ -11,6 +11,7 @@
 #include "fun/instances/eq.hpp"
 
 using namespace fun;
+using namespace fun::eq_ops;
 using namespace fun::underscore;
 
 //
@@ -99,40 +100,40 @@ TEST_CASE("eq"){
             REQUIRE((vali(2) != vali(3)));
         }
         {
-            REQUIRE(make_all(true) == make_all(true));
-            REQUIRE_FALSE(make_all(true) != make_all(true));
-            REQUIRE_FALSE(make_all(true) == make_all(false));
-            REQUIRE(make_all(true) != make_all(false));
+            REQUIRE((make_all(true) == make_all(true)));
+            REQUIRE_FALSE((make_all(true) != make_all(true)));
+            REQUIRE_FALSE((make_all(true) == make_all(false)));
+            REQUIRE((make_all(true) != make_all(false)));
 
-            REQUIRE(make_any(true) == make_any(true));
-            REQUIRE_FALSE(make_any(true) != make_any(true));
-            REQUIRE_FALSE(make_any(true) == make_any(false));
-            REQUIRE(make_any(true) != make_any(false));
+            REQUIRE((make_any(true) == make_any(true)));
+            REQUIRE_FALSE((make_any(true) != make_any(true)));
+            REQUIRE_FALSE((make_any(true) == make_any(false)));
+            REQUIRE((make_any(true) != make_any(false)));
 
-            REQUIRE(make_sum(10) == make_sum(10));
-            REQUIRE_FALSE(make_sum(10) != make_sum(10));
-            REQUIRE_FALSE(make_sum(10) == make_sum(11));
-            REQUIRE(make_sum(10) != make_sum(11));
+            REQUIRE((make_sum(10) == make_sum(10)));
+            REQUIRE_FALSE((make_sum(10) != make_sum(10)));
+            REQUIRE_FALSE((make_sum(10) == make_sum(11)));
+            REQUIRE((make_sum(10) != make_sum(11)));
 
-            REQUIRE(make_product(10) == make_product(10));
-            REQUIRE_FALSE(make_product(10) != make_product(10));
-            REQUIRE_FALSE(make_product(11) == make_product(10));
-            REQUIRE(make_product(11) != make_product(10));
+            REQUIRE((make_product(10) == make_product(10)));
+            REQUIRE_FALSE((make_product(10) != make_product(10)));
+            REQUIRE_FALSE((make_product(11) == make_product(10)));
+            REQUIRE((make_product(11) != make_product(10)));
 
-            REQUIRE(make_box(10) == make_box(10));
-            REQUIRE_FALSE(make_box(10) != make_box(10));
-            REQUIRE_FALSE(make_box(11) == make_box(10));
-            REQUIRE(make_box(11) != make_box(10));
+            REQUIRE((make_box(10) == make_box(10)));
+            REQUIRE_FALSE((make_box(10) != make_box(10)));
+            REQUIRE_FALSE((make_box(11) == make_box(10)));
+            REQUIRE((make_box(11) != make_box(10)));
 
-            REQUIRE(make_just(10) == make_just(10));
-            REQUIRE_FALSE(make_just(10) != make_just(10));
-            REQUIRE_FALSE(make_just(10) == make_just(11));
-            REQUIRE(make_just(11) != make_just(10));
+            REQUIRE((make_just(10) == make_just(10)));
+            REQUIRE_FALSE((make_just(10) != make_just(10)));
+            REQUIRE_FALSE((make_just(10) == make_just(11)));
+            REQUIRE((make_just(11) != make_just(10)));
 
-            REQUIRE_FALSE(make_just(10) == make_nothing<int>());
-            REQUIRE_FALSE(make_nothing<int>() == make_just(10));
-            REQUIRE(make_just(10) != make_nothing<int>());
-            REQUIRE(make_nothing<int>() != make_just(10));
+            REQUIRE_FALSE((make_just(10) == make_nothing<int>()));
+            REQUIRE_FALSE((make_nothing<int>() == make_just(10)));
+            REQUIRE((make_just(10) != make_nothing<int>()));
+            REQUIRE((make_nothing<int>() != make_just(10)));
         }
     }
 }

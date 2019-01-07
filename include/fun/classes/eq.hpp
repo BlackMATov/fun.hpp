@@ -55,13 +55,16 @@ namespace fun
     // eq operators
     //
 
-    template < typename A, typename = std::enable_if_t<eq_t::instance<A>> >
-    bool operator==(const A& lhs, const A& rhs) {
-        return eq_f::equals(lhs, rhs);
-    }
+    namespace eq_ops
+    {
+        template < typename A, typename = std::enable_if_t<eq_t::instance<A>> >
+        bool operator==(const A& lhs, const A& rhs) {
+            return eq_f::equals(lhs, rhs);
+        }
 
-    template < typename A, typename = std::enable_if_t<eq_t::instance<A>> >
-    bool operator!=(const A& lhs, const A& rhs) {
-        return eq_f::not_equals(lhs, rhs);
+        template < typename A, typename = std::enable_if_t<eq_t::instance<A>> >
+        bool operator!=(const A& lhs, const A& rhs) {
+            return eq_f::not_equals(lhs, rhs);
+        }
     }
 }
