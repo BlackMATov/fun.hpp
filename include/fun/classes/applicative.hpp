@@ -84,7 +84,7 @@ namespace fun
             }
         };
         template < template <typename...> class T, typename... As >
-        inline auto fpure = curry(pure_f<T,As...>());
+        inline const auto fpure = curry(pure_f<T,As...>());
 
         //
         // apply
@@ -107,7 +107,7 @@ namespace fun
                 return apply(f, a);
             }
         };
-        inline auto fapply = curry(apply_f());
+        inline const auto fapply = curry(apply_f());
 
         //
         // lift_a2
@@ -131,7 +131,7 @@ namespace fun
                 return lift_a2(f, a, b);
             }
         };
-        inline auto flift_a2 = curry(lift_a2_f());
+        inline const auto flift_a2 = curry(lift_a2_f());
 
         //
         // lift_a3
@@ -156,7 +156,7 @@ namespace fun
                 return lift_a3(f, a, b, c);
             }
         };
-        inline auto flift_a3 = curry(lift_a3_f());
+        inline const auto flift_a3 = curry(lift_a3_f());
     }
 
     //

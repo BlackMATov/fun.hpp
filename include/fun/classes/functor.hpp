@@ -74,7 +74,7 @@ namespace fun
                 return fmap(f, t);
             }
         };
-        inline auto ffmap = curry(fmap_f());
+        inline const auto ffmap = curry(fmap_f());
 
         //
         // ffmap_const
@@ -97,7 +97,7 @@ namespace fun
                 return fmap_const(b, t);
             }
         };
-        inline auto ffmap_const = curry(fmap_const_f());
+        inline const auto ffmap_const = curry(fmap_const_f());
     }
 
     //

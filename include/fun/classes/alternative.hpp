@@ -68,7 +68,7 @@ namespace fun
         };
 
         template < template <typename...> class T, typename... As >
-        inline auto fempty = curry(empty_f<T,As...>());
+        inline const auto fempty = curry(empty_f<T,As...>());
 
         //
         // alter
@@ -90,7 +90,7 @@ namespace fun
                 return alter(lhs, rhs);
             }
         };
-        inline auto falter = curry(alter_f());
+        inline const auto falter = curry(alter_f());
     }
 
     //
