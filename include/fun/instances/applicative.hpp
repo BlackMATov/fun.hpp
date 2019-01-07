@@ -36,7 +36,7 @@ namespace fun
         static sum_t<B> apply(const sum_t<F>& f, const sum_t<A>& a) {
             static_assert(
                 std::is_convertible<F, std::function<B(A)>>::value,
-                "apply requires a function type (A -> B)");
+                "apply requires a function type (a -> b)");
             return make_sum(f.get_sum()(a.get_sum()));
         }
     };
@@ -54,7 +54,7 @@ namespace fun
         static product_t<B> apply(const product_t<F>& f, const product_t<A>& a) {
             static_assert(
                 std::is_convertible<F, std::function<B(A)>>::value,
-                "apply requires a function type (A -> B)");
+                "apply requires a function type (a -> b)");
             return make_product(f.get_product()(a.get_product()));
         }
     };
@@ -72,7 +72,7 @@ namespace fun
         static box_t<B> apply(const box_t<F>& f, const box_t<A>& v) {
             static_assert(
                 std::is_convertible<F, std::function<B(A)>>::value,
-                "apply requires a function type (A -> B)");
+                "apply requires a function type (a -> b)");
             return make_box((*f)(*v));
         }
     };
@@ -90,7 +90,7 @@ namespace fun
         static maybe_t<B> apply(const maybe_t<F>& f, const maybe_t<A>& v) {
             static_assert(
                 std::is_convertible<F, std::function<B(A)>>::value,
-                "apply requires a function type (A -> B)");
+                "apply requires a function type (a -> b)");
             return (f.is_just() && v.is_just())
                 ? make_just((*f)(*v))
                 : make_nothing<B>();

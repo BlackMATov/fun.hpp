@@ -28,6 +28,12 @@ namespace fun
     template < typename T >
     class maybe_t final {
     public:
+        using value_type = T;
+        using pointer = value_type*;
+        using const_pointer = const value_type*;
+        using reference = value_type&;
+        using const_reference = const value_type&;
+    public:
         maybe_t() = default;
         ~maybe_t() noexcept = default;
 
@@ -78,6 +84,32 @@ namespace fun
     inline nothing_t make_nothing() {
         return nothing_t{};
     }
+
+    //
+    // make_just_f, fjust
+    //
+
+    struct make_just_f {
+        template < typename A >
+        auto operator()(A&& v) const {
+            return make_just(std::forward<A>(v));
+        }
+    };
+    inline const auto fjust = curry(make_just_f());
+
+    //
+    // make_nothing_f, fnothing
+    //
+
+    template < typename A >
+    struct make_nothing_f {
+        auto operator()() const {
+            return make_nothing<A>();
+        }
+    };
+    template < typename A >
+    inline const auto fnothing = make_nothing_f<A>()();
+
 }
 
 namespace fun
