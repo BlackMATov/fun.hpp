@@ -1,7 +1,5 @@
 # fun.hpp
 
-
-
 ## Types
 
 ### Box
@@ -29,8 +27,6 @@ REQUIRE(n.is_nothing());
 REQUIRE_THROWS(*n);
 ```
 
-
-
 ## Type Classes
 
 ### Functor
@@ -51,6 +47,21 @@ maybe_t<float> n1 = (_ * 2.f) >>= n; // fmap operator syntax
 REQUIRE(n1.is_nothing());
 ```
 
+### Applicative
 
+```cpp
+#include <fun/classes/applicative.hpp>
+#include <fun/instances/applicative.hpp>
+
+using namespace fun;
+using namespace fun::underscore;
+
+maybe_t<int> m = applicative_f::apply(make_just(_+20), make_just(22));
+REQUIRE(*m == 42);
+
+maybe_t<int> n = make_nothing<int>();
+maybe_t<int> n1 = make_just(_+20) >>= n; // apply operator syntax
+REQUIRE(n1.is_nothing());
+```
 
 ## [License (MIT)](./LICENSE.md)

@@ -77,7 +77,7 @@ namespace fun
         constexpr auto ffmap = curry(fmap_f());
 
         //
-        // fmapConst
+        // ffmap_const
         //
 
         template

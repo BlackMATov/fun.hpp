@@ -11,7 +11,10 @@
 #include "fun/types/maybe.hpp"
 
 #include <fun/classes/functor.hpp>
+#include <fun/classes/applicative.hpp>
+
 #include <fun/instances/functor.hpp>
+#include <fun/instances/applicative.hpp>
 
 TEST_CASE("readme_types") {
     SECTION("box") {
@@ -43,6 +46,17 @@ TEST_CASE("readme_type_classes") {
 
         maybe_t<int> n = make_nothing<int>();
         maybe_t<float> n1 = (_ * 2.f) >>= n; // fmap operator syntax
+        REQUIRE(n1.is_nothing());
+    }
+    SECTION("applicative") {
+        using namespace fun;
+        using namespace fun::underscore;
+
+        maybe_t<int> m = applicative_f::apply(make_just(_+20), make_just(22));
+        REQUIRE(*m == 42);
+
+        maybe_t<int> n = make_nothing<int>();
+        maybe_t<int> n1 = make_just(_+20) >>= n; // apply operator syntax
         REQUIRE(n1.is_nothing());
     }
 }
