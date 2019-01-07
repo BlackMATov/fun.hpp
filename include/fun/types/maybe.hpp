@@ -13,6 +13,10 @@
 
 namespace fun
 {
+    struct nothing_t {
+        constexpr explicit nothing_t() = default;
+    };
+
     struct just_ctor_t {
         constexpr explicit just_ctor_t() = default;
     };
@@ -29,6 +33,8 @@ namespace fun
 
         maybe_t(const maybe_t&) = default;
         maybe_t& operator=(const maybe_t&) = default;
+
+        maybe_t(nothing_t c) noexcept;
 
         explicit maybe_t(just_ctor_t c, T&& v);
         explicit maybe_t(just_ctor_t c, const T& v);
@@ -68,10 +74,19 @@ namespace fun
     auto make_nothing() {
         return maybe_t<T>();
     }
+
+    inline nothing_t make_nothing() {
+        return nothing_t{};
+    }
 }
 
 namespace fun
 {
+    template < typename T >
+    maybe_t<T>::maybe_t(nothing_t c) noexcept {
+        (void)c;
+    }
+
     template < typename T >
     maybe_t<T>::maybe_t(just_ctor_t c, T&& v)
     : value_(std::make_shared<T>(std::move(v))) { (void)c; }

@@ -56,4 +56,10 @@ TEST_CASE("maybe") {
         REQUIRE_THROWS_AS((*m).v, std::logic_error);
         REQUIRE_THROWS_AS(m->v, std::logic_error);
     }
+    {
+        maybe_t<int> m = nothing_t{};
+        REQUIRE(m.is_nothing());
+        maybe_t<int> m2 = make_nothing();
+        REQUIRE(m2.is_nothing());
+    }
 }
