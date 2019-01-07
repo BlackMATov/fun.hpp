@@ -39,5 +39,7 @@ TEST_CASE("monoid"){
         REQUIRE(monoid_f::append(make_product(21), make_product(2)).get_product() == 42);
 
         REQUIRE(monoid_f::append(make_nothing<sum_t<int>>(), make_just(make_sum(32)))->get_sum() == 32);
+        REQUIRE(monoid_f::append(make_just(make_sum(32)), make_nothing<sum_t<int>>())->get_sum() == 32);
+        REQUIRE(monoid_f::append(make_just(make_sum(32)), make_just<sum_t<int>>(10))->get_sum() == 42);
     }
 }
