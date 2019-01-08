@@ -11,4 +11,10 @@
 namespace fun
 {
     using namespace kari;
+
+    enum class ordering {
+        lt,
+        eq,
+        gt
+    };
 }

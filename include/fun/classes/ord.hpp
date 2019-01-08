@@ -12,16 +12,6 @@
 namespace fun
 {
     //
-    // ordering
-    //
-
-    enum class ordering {
-        lt,
-        eq,
-        gt
-    };
-
-    //
     // ord_inst_t
     //
 
