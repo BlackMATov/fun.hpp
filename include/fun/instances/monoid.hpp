@@ -7,9 +7,6 @@
 #pragma once
 #include "_instances.hpp"
 
-#include <functional>
-#include <type_traits>
-
 #include "../types/all.hpp"
 #include "../types/any.hpp"
 #include "../types/sum.hpp"

@@ -7,9 +7,6 @@
 #pragma once
 #include "_instances.hpp"
 
-#include <functional>
-#include <type_traits>
-
 #include "../types/box.hpp"
 #include "../types/maybe.hpp"
 
@@ -23,6 +20,19 @@
 
 namespace fun
 {
+    template <>
+    struct monad_inst_t<box_t, box_t> : monad_inst_t<box_t> {
+        static constexpr bool instance = true;
+
+        template < typename A, typename F, typename B = typename std::invoke_result_t<F,A>::value_type >
+        static box_t<B> mbind(const box_t<A>& a, F&& f) {
+            static_assert(
+                std::is_convertible<F, std::function<box_t<B>(A)>>::value,
+                "mbind requires a function type (a -> m b)");
+            return std::forward<F>(f)(*a);
+        }
+    };
+
     template <>
     struct monad_inst_t<maybe_t, maybe_t> : monad_inst_t<maybe_t> {
         static constexpr bool instance = true;

@@ -73,7 +73,7 @@ namespace fun
     }
 
     //
-    // monoid_f operators
+    // monoid operators
     //
 
     namespace monoid_ops

@@ -7,8 +7,6 @@
 #pragma once
 #include "_classes.hpp"
 
-#include <type_traits>
-
 #include "../classes/applicative.hpp"
 
 namespace fun

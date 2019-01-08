@@ -7,9 +7,6 @@
 #pragma once
 #include "_classes.hpp"
 
-#include <tuple>
-#include <type_traits>
-
 #include "../classes/functor.hpp"
 #include "../classes/applicative.hpp"
 
@@ -350,7 +347,7 @@ namespace fun
     }
 
     //
-    // monad_f operators
+    // monad operators
     //
 
     namespace monad_ops

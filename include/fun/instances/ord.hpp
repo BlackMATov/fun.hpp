@@ -15,7 +15,7 @@
 #include "../types/box.hpp"
 #include "../types/maybe.hpp"
 
-#include "../classes/eq.hpp"
+#include "../classes/ord.hpp"
 
 namespace fun
 {
@@ -24,14 +24,14 @@ namespace fun
     //
 
     template < typename A >
-    struct eq_inst_t<A,
+    struct ord_inst_t<A,
         std::enable_if_t<
             std::is_arithmetic<A>::value, A>
-        > : eq_inst_t<A>
+        > : ord_inst_t<A>
     {
         static constexpr bool instance = true;
-        static bool equals(A l, A r) {
-            return l == r;
+        static bool less(A l, A r) {
+            return l < r;
         }
     };
 
@@ -40,10 +40,10 @@ namespace fun
     //
 
     template <>
-    struct eq_inst_t<all_t, all_t> : eq_inst_t<all_t> {
+    struct ord_inst_t<all_t, all_t> : ord_inst_t<all_t> {
         static constexpr bool instance = true;
-        static bool equals(const all_t& l, const all_t& r) {
-            return l.get_all() == r.get_all();
+        static bool less(const all_t& l, const all_t& r) {
+            return l.get_all() < r.get_all();
         }
     };
 
@@ -52,10 +52,10 @@ namespace fun
     //
 
     template <>
-    struct eq_inst_t<any_t, any_t> : eq_inst_t<any_t> {
+    struct ord_inst_t<any_t, any_t> : ord_inst_t<any_t> {
         static constexpr bool instance = true;
-        static bool equals(const any_t& l, const any_t& r) {
-            return l.get_any() == r.get_any();
+        static bool less(const any_t& l, const any_t& r) {
+            return l.get_any() < r.get_any();
         }
     };
 
@@ -64,14 +64,14 @@ namespace fun
     //
 
     template < typename A >
-    struct eq_inst_t<sum_t<A>,
+    struct ord_inst_t<sum_t<A>,
         std::enable_if_t<
-            eq_t::instance<A>, sum_t<A>>
-        > : eq_inst_t<sum_t<A>>
+            ord_t::instance<A>, sum_t<A>>
+        > : ord_inst_t<sum_t<A>>
     {
         static constexpr bool instance = true;
-        static bool equals(const sum_t<A>& l, const sum_t<A>& r) {
-            return eq_f::equals(l.get_sum(), r.get_sum());
+        static bool less(const sum_t<A>& l, const sum_t<A>& r) {
+            return ord_f::less(l.get_sum(), r.get_sum());
         }
     };
 
@@ -80,14 +80,14 @@ namespace fun
     //
 
     template < typename A >
-    struct eq_inst_t<product_t<A>,
+    struct ord_inst_t<product_t<A>,
         std::enable_if_t<
-            eq_t::instance<A>, product_t<A>>
-        > : eq_inst_t<product_t<A>>
+            ord_t::instance<A>, product_t<A>>
+        > : ord_inst_t<product_t<A>>
     {
         static constexpr bool instance = true;
-        static bool equals(const product_t<A>& l, const product_t<A>& r) {
-            return eq_f::equals(l.get_product(), r.get_product());
+        static bool less(const product_t<A>& l, const product_t<A>& r) {
+            return ord_f::less(l.get_product(), r.get_product());
         }
     };
 
@@ -96,14 +96,14 @@ namespace fun
     //
 
     template < typename A >
-    struct eq_inst_t<box_t<A>,
+    struct ord_inst_t<box_t<A>,
         std::enable_if_t<
-            eq_t::instance<A>, box_t<A>>
-        > : eq_inst_t<box_t<A>>
+            ord_t::instance<A>, box_t<A>>
+        > : ord_inst_t<box_t<A>>
     {
         static constexpr bool instance = true;
-        static bool equals(const box_t<A>& l, const box_t<A>& r) {
-            return eq_f::equals(*l, *r);
+        static bool less(const box_t<A>& l, const box_t<A>& r) {
+            return ord_f::less(*l, *r);
         }
     };
 
@@ -112,16 +112,16 @@ namespace fun
     //
 
     template < typename A >
-    struct eq_inst_t<maybe_t<A>,
+    struct ord_inst_t<maybe_t<A>,
         std::enable_if_t<
-            eq_t::instance<A>, maybe_t<A>>
-        > : eq_inst_t<maybe_t<A>>
+            ord_t::instance<A>, maybe_t<A>>
+        > : ord_inst_t<maybe_t<A>>
     {
         static constexpr bool instance = true;
-        static bool equals(const maybe_t<A>& l, const maybe_t<A>& r) {
+        static bool less(const maybe_t<A>& l, const maybe_t<A>& r) {
             return
-                (l.is_nothing() && r.is_nothing()) ||
-                (l.is_just() && r.is_just() && eq_f::equals(*l, *r));
+                (l.is_just() < r.is_just()) ||
+                (l.is_just() && r.is_just() && ord_f::less(*l, *r));
         }
     };
 }

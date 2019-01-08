@@ -7,8 +7,6 @@
 #pragma once
 #include "_classes.hpp"
 
-#include <type_traits>
-
 namespace fun
 {
     //
@@ -101,7 +99,7 @@ namespace fun
     }
 
     //
-    // functor_f operators
+    // functor operators
     //
 
     namespace functor_ops

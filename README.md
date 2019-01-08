@@ -155,6 +155,23 @@ REQUIRE((
 )->get_sum() == 42);
 ```
 
+### Foldable
+
+```cpp
+#include <fun/classes/foldable.hpp>
+#include <fun/instances/foldable.hpp>
+
+using namespace fun;
+using namespace fun::eq_ops;
+using namespace fun::underscore;
+
+REQUIRE((foldable_f::fold(fjust(make_sum(10))) == fsum(10)));
+REQUIRE((foldable_f::fold(fnothing<sum_t<int>>) == fsum(0)));
+
+REQUIRE((foldable_f::fold_map(fsum * (_*2), fjust(10)) == fsum(20)));
+REQUIRE((foldable_f::fold_map(fsum * (_*2), fnothing<int>) == fsum(0)));
+```
+
 ### Monad
 
 ```cpp
@@ -200,7 +217,5 @@ auto m2 = monad_f::mdo<maybe_t>(
 );
 REQUIRE((m2 == make_nothing<int>()));
 ```
-
-
 
 ## [License (MIT)](./LICENSE.md)

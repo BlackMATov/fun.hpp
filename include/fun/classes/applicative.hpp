@@ -7,8 +7,6 @@
 #pragma once
 #include "_classes.hpp"
 
-#include <type_traits>
-
 #include "../classes/functor.hpp"
 
 namespace fun
@@ -160,7 +158,7 @@ namespace fun
     }
 
     //
-    // applicative_f operators
+    // applicative operators
     //
 
     namespace applicative_ops

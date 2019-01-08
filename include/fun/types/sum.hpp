@@ -7,8 +7,6 @@
 #pragma once
 #include "_types.hpp"
 
-#include <utility>
-
 namespace fun
 {
     template < typename A >
