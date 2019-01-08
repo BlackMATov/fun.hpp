@@ -160,7 +160,7 @@ namespace fun
     }
 
     //
-    // applicative_f operators
+    // applicative operators
     //
 
     namespace applicative_ops

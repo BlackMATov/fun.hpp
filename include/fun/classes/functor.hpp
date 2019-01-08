@@ -101,7 +101,7 @@ namespace fun
     }
 
     //
-    // functor_f operators
+    // functor operators
     //
 
     namespace functor_ops

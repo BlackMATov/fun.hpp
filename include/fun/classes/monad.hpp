@@ -350,7 +350,7 @@ namespace fun
     }
 
     //
-    // monad_f operators
+    // monad operators
     //
 
     namespace monad_ops
