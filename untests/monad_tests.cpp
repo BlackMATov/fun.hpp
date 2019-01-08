@@ -18,33 +18,41 @@ using namespace fun::underscore;
 
 TEST_CASE("monad"){
     SECTION("mreturn") {
+        REQUIRE((monad_f::mreturn<box_t>(10) == make_box(10)));
         REQUIRE((monad_f::mreturn<maybe_t>(10) == make_just(10)));
     }
     SECTION("fmreturn") {
+        REQUIRE((monad_f::fmreturn<box_t>(10) == make_box(10)));
         REQUIRE((monad_f::fmreturn<maybe_t>(10) == make_just(10)));
     }
     SECTION("mbind") {
+        REQUIRE((monad_f::mbind(fbox(10), fbox * (_*2)) == fbox(20)));
         REQUIRE((monad_f::mbind(fjust(10), fjust * (_*2)) == fjust(20)));
         REQUIRE((monad_f::mbind(fnothing<int>, fjust * (_*2)) == fnothing<int>));
     }
     SECTION("fmbind") {
+        REQUIRE((monad_f::fmbind(fbox(10), fbox * (_*2)) == fbox(20)));
         REQUIRE((monad_f::fmbind(fjust(10), fjust * (_*2)) == fjust(20)));
         REQUIRE((monad_f::fmbind(fnothing<int>, fjust * (_*2)) == fnothing<int>));
     }
     SECTION("mbind_const") {
+        REQUIRE((monad_f::mbind_const(fbox(10), fbox(20)) == make_box(20)));
         REQUIRE((monad_f::mbind_const(fjust(10), fjust(20)) == make_just(20)));
         REQUIRE((monad_f::mbind_const(fnothing<int>, fjust(20)) == fnothing<int>));
     }
     SECTION("fmbind_const") {
+        REQUIRE((monad_f::fmbind_const(fbox(10), fbox(20)) == make_box(20)));
         REQUIRE((monad_f::fmbind_const(fjust(10), fjust(20)) == make_just(20)));
         REQUIRE((monad_f::fmbind_const(fnothing<int>, fjust(20)) == fnothing<int>));
     }
     SECTION("operators") {
         using namespace monad_ops;
 
+        REQUIRE(((fbox(10) >>= fbox * (_*2)) == fbox(20)));
         REQUIRE(((fjust(10) >>= fjust * (_*2)) == fjust(20)));
         REQUIRE(((fnothing<int> >>= fjust * (_*2)) == fnothing<int>));
 
+        REQUIRE(((fbox(10) >> fbox(20)) == fbox(20)));
         REQUIRE(((fjust(10) >> fjust(20)) == fjust(20)));
         REQUIRE(((fnothing<int> >> fjust(20)) == fnothing<int>));
     }
@@ -52,8 +60,13 @@ TEST_CASE("monad"){
         const auto f = [](int a, int b, int c) {
             return a + b + c;
         };
+        REQUIRE((monad_f::lift_m((_+10), fbox(32)) == fbox(42)));
         REQUIRE((monad_f::lift_m((_+10), fjust(32)) == fjust(42)));
+
+        REQUIRE((monad_f::lift_m2((_+_), fbox(32), fbox(10)) == fbox(42)));
         REQUIRE((monad_f::lift_m2((_+_), fjust(32), fjust(10)) == fjust(42)));
+
+        REQUIRE((monad_f::lift_m3(f, fbox(30), fbox(10), fbox(2)) == fbox(42)));
         REQUIRE((monad_f::lift_m3(f, fjust(30), fjust(10), fjust(2)) == fjust(42)));
     }
     SECTION("flifts") {
