@@ -7,10 +7,6 @@
 #pragma once
 #include "_instances.hpp"
 
-#include <functional>
-#include <type_traits>
-
-#include "../types/box.hpp"
 #include "../types/maybe.hpp"
 
 #include "../classes/applicative.hpp"

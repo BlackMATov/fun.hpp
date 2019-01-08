@@ -7,10 +7,6 @@
 #pragma once
 #include "_types.hpp"
 
-#include <memory>
-#include <stdexcept>
-#include <type_traits>
-
 namespace fun
 {
     struct nothing_t {

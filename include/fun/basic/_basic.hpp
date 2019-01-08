@@ -6,6 +6,13 @@
 
 #pragma once
 
+#include <tuple>
+#include <memory>
+#include <utility>
+#include <stdexcept>
+#include <functional>
+#include <type_traits>
+
 #include "../3rdparty/kari.hpp"
 
 namespace fun

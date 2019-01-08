@@ -7,9 +7,6 @@
 #pragma once
 #include "_classes.hpp"
 
-#include <tuple>
-#include <type_traits>
-
 #include "../classes/functor.hpp"
 #include "../classes/applicative.hpp"
 
