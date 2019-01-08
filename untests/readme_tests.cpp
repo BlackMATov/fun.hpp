@@ -21,6 +21,7 @@
 #include <fun/classes/monad.hpp>
 #include <fun/classes/monoid.hpp>
 #include <fun/classes/functor.hpp>
+#include <fun/classes/foldable.hpp>
 #include <fun/classes/applicative.hpp>
 #include <fun/classes/alternative.hpp>
 
@@ -29,6 +30,7 @@
 #include <fun/instances/monad.hpp>
 #include <fun/instances/monoid.hpp>
 #include <fun/instances/functor.hpp>
+#include <fun/instances/foldable.hpp>
 #include <fun/instances/applicative.hpp>
 #include <fun/instances/alternative.hpp>
 
@@ -120,6 +122,17 @@ TEST_CASE("readme_type_classes") {
             make_nothing<sum_t<int>>() >>=
             make_just(make_sum(10))
         )->get_sum() == 42);
+    }
+    SECTION("foldable") {
+        using namespace fun;
+        using namespace fun::eq_ops;
+        using namespace fun::underscore;
+
+        REQUIRE((foldable_f::fold(fjust(make_sum(10))) == fsum(10)));
+        REQUIRE((foldable_f::fold(fnothing<sum_t<int>>) == fsum(0)));
+
+        REQUIRE((foldable_f::fold_map(fsum * (_*2), fjust(10)) == fsum(20)));
+        REQUIRE((foldable_f::fold_map(fsum * (_*2), fnothing<int>) == fsum(0)));
     }
     SECTION("monad") {
         using namespace fun;
