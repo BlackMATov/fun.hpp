@@ -1,9 +1,9 @@
 /*******************************************************************************
- * This file is part of the "https://github.com/blackmatov/promise.hpp"
+ * This file is part of the "https://github.com/blackmatov/fun.hpp"
  * For conditions of distribution and use, see copyright notice in LICENSE.md
- * Copyright (C) 2018 Matvey Cherevko
+ * Copyright (C) 2019-2020, by Matvey Cherevko (blackmatov@gmail.com)
  ******************************************************************************/
 
 #define CATCH_CONFIG_MAIN
 #define CATCH_CONFIG_FAST_COMPILE
-#include "catch.hpp"
+#include <catch2/catch.hpp>

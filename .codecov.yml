@@ -1,3 +1,4 @@
 ignore:
-  - "3rdparty/*"
-  - "untests/*"
+  - "catch.hpp"
+  - "catch_main.hpp"
+  - "*_tests.cpp"

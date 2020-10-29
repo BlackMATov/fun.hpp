@@ -1,5 +1,7 @@
 # fun.hpp
 
+> My old crazy idea about functional programming in C++
+
 [![travis][badge.travis]][travis]
 [![appveyor][badge.appveyor]][appveyor]
 [![codecov][badge.codecov]][codecov]
@@ -7,9 +9,9 @@
 [![license][badge.license]][license]
 [![paypal][badge.paypal]][paypal]
 
-[badge.travis]: https://img.shields.io/travis/BlackMATov/fun.hpp/master.svg?logo=travis
-[badge.appveyor]: https://img.shields.io/appveyor/ci/BlackMATov/fun-hpp/master.svg?logo=appveyor
-[badge.codecov]: https://img.shields.io/codecov/c/github/BlackMATov/fun.hpp/master.svg?logo=codecov
+[badge.travis]: https://img.shields.io/travis/BlackMATov/fun.hpp/main.svg?logo=travis
+[badge.appveyor]: https://img.shields.io/appveyor/ci/BlackMATov/fun-hpp/main.svg?logo=appveyor
+[badge.codecov]: https://img.shields.io/codecov/c/github/BlackMATov/fun.hpp/main.svg?logo=codecov
 [badge.language]: https://img.shields.io/badge/language-C%2B%2B17-red.svg
 [badge.license]: https://img.shields.io/badge/license-MIT-blue.svg
 [badge.paypal]: https://img.shields.io/badge/donate-PayPal-orange.svg?logo=paypal&colorA=00457C
